@@ -28,13 +28,13 @@ jobs:
       - name: Zip artifact for deployment  
         run: |  
           cd src  # Ensure we're in the correct directory  
-          zip -r release.zip .  
+          zip -r ../release.zip .  # Zip the contents and place the zip file in the parent directory  
   
       - name: Upload artifact for deployment job  
         uses: actions/upload-artifact@v4  
         with:  
           name: node-app  
-          path: src/release.zip  # Adjusted path  
+          path: release.zip  # The zip file is now in the parent directory  
   
   deploy:  
     runs-on: ubuntu-latest  
@@ -52,7 +52,7 @@ jobs:
           name: node-app  
   
       - name: Unzip artifact for deployment  
-        run: unzip src/release.zip  # Adjusted path  
+        run: unzip release.zip  # The zip file should be in the current directory  
   
       - name: Login to Azure  
         uses: azure/login@v2  
